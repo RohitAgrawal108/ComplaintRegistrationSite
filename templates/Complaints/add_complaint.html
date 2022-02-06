@@ -1,0 +1,79 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container mt-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{% url 'Complaints'%}">Complaint</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">Add Complaint</li>
+    </ol>
+  </nav>
+
+  <div class="card">
+    <div class="card-body">
+      <form action="{% url 'add-complaints' %}" method="post">
+        {% include 'partials/_messages.html'%} {% csrf_token %}
+        <div class="form-group">
+          <label for="">Complaint Against</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            name="against"
+            value="{{values.against}}"
+          />
+        </div> 
+        <div class="form-group">
+          <label for="">Description</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            name="description"
+            value="{{values.description}}"
+          />
+        </div>
+        <div class="form-group">
+          <label for="">Category</label>
+          <select class="form-control" name="category">
+            {% for category in categories%}
+            <option name="category" value="{{category.name}}"
+              >{{category.name}}</option
+            >
+
+            {% endfor %}
+          </select>
+        </div>
+        {% comment %}  {% endcomment %}
+        <div class="form-group">
+          <label for="">State</label>
+          <select class="form-control" name="state">
+            {% for state in states%}
+            <option name="state" value="{{state.name}}"
+              >{{state.name}}- {{state.value}}</option
+            >
+
+            {% endfor %}
+          </select>
+        </div>
+        {% comment %}  {% endcomment %}
+
+        <div class="form-group">
+          <label for="">Date of Complaint</label>
+          <input
+            type="date"
+            class="form-control form-control-sm"
+            name="complaint_date"
+          />
+        </div>
+
+        <input
+          type="submit"
+          value="Submit"
+          class="btn btn-primary btn-primary-sm"
+        />
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
